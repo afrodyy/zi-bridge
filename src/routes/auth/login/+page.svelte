@@ -15,7 +15,7 @@
 	<div class="grid grid-cols-3 gap-4">
 		<div class="col-span-2 h-screen bg-gradient-to-b from-blue-600 to-cyan-500">
 			<div class="flex justify-center">
-				<h1 class="mt-64 text-white text-5xl font-bold">CareConnect.</h1>
+				<h1 class="mt-64 text-white text-5xl font-bold">Zi.Bridge</h1>
 			</div>
 		</div>
 		<div class="my-auto px-20 rounded-2xl border-red-500">
