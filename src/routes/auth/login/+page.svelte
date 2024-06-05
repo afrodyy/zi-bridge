@@ -1,13 +1,48 @@
 <script>
 	import '../../../app.css';
+	import { goto } from '$app/navigation';
 
 	let formData = {
 		username: '',
 		password: ''
 	};
 
+	const user = [
+		{
+			username: 'admin',
+			password: '123456',
+			role: 'admin'
+		},
+		{
+			username: 'dev',
+			password: '123456',
+			role: 'dev'
+		},
+		{
+			username: 'qa',
+			password: '123456',
+			role: 'qa'
+		},
+		{
+			username: 'masterdata',
+			password: '123456',
+			role: 'master-data'
+		},
+		{
+			username: 'guest',
+			password: '123456',
+			role: 'guest'
+		}
+	];
+
 	const handleLogin = async () => {
-		console.log(formData);
+		for (let i = 0; i < user.length; i++) {
+			if (user[i].username === formData.username && user[i].password === formData.password) {
+				localStorage.setItem('username', user[i].username);
+				localStorage.setItem('role', user[i].role);
+				goto('/dashboard');
+			}
+		}
 	};
 </script>
 
@@ -32,6 +67,7 @@
 						class="w-full border border-blue-300 rounded-full px-4 py-3 focus:outline-blue-600"
 						placeholder="Nama pengguna"
 						autocomplete="off"
+						required
 					/>
 				</div>
 				<div class="mb-3">
@@ -43,6 +79,7 @@
 						class="w-full border border-blue-300 rounded-full px-4 py-3 focus:outline-blue-600"
 						placeholder="Kata sandi"
 						autocomplete="off"
+						required
 					/>
 				</div>
 				<div class="mb-3">

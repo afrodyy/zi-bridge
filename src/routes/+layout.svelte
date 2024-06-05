@@ -1,5 +1,4 @@
 <script>
-	// Import necessary dependencies from SvelteKit
 	// import { meta } from '$app/stores';
 	import '../app.css';
 	import { page } from '$app/stores';
@@ -7,7 +6,6 @@
 	import Header from '../components/Header.svelte';
 
 	$: currentRoute = $page.url.pathname;
-	// $: currentRoute = $page.route.id;
 
 	// Set meta tags for the page
 	// meta.set({
