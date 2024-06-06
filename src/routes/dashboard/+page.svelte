@@ -1,6 +1,7 @@
 <script>
 	import Button from '../../components/Button.svelte';
 	import Card from '../../components/Card.svelte';
+	import { count } from '$lib/store';
 </script>
 
 <!-- Page Title -->
@@ -43,6 +44,19 @@
 					<p class="text-gray-700 text-base">Card content</p>
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<div class="flex flex-wrap">
+		<div class="w-full">
+			<h1 class="text-2xl font-semibold my-8">Test State Management</h1>
+
+			<button
+				type="button"
+				on:click={() => $count++}
+				class="px-2 py-1 rounded text-white bg-blue-500">Increment</button
+			>
+			<p>Count: {$count}</p>
 		</div>
 	</div>
 </div>
