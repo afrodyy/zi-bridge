@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { sidebarOpen } from '$lib/store';
 	import { onMount } from 'svelte';
+	import Button from './Button.svelte';
 
 	let isOpen = true;
 
@@ -45,7 +46,7 @@
 	<button
 		type="button"
 		on:click={handleLogout}
-		class="px-4 py-2 rounded text-white bg-blue-400 hover:bg-blue-500 focus:ring focus:ring-blue-200 transition duration-150 ease-in-out"
+		class="px-4 py-2 rounded text-white font-medium bg-blue-400 hover:bg-blue-500 focus:ring focus:ring-blue-200 transition duration-150 ease-in-out"
 		>Logout</button
 	>
 </header>
