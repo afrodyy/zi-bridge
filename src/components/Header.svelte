@@ -3,8 +3,11 @@
 	import { sidebarOpen } from '$lib/store';
 	import { onMount } from 'svelte';
 	import Button from './Button.svelte';
+	import { fly } from 'svelte/transition';
 
 	let isOpen = true;
+	let showUserMenu = false;
+	let username = '';
 
 	const handleLogout = () => {
 		localStorage.removeItem('username');
@@ -22,8 +25,17 @@
 		}
 	};
 
+	function handleUserMenu() {
+		if (showUserMenu === false) {
+			showUserMenu = true;
+		} else {
+			showUserMenu = false;
+		}
+	}
+
 	onMount(() => {
 		sidebarOpen.set(isOpen);
+		username = localStorage.getItem('username');
 	});
 </script>
 
@@ -42,11 +54,40 @@
 			/>
 		</svg>
 	</button>
-	<!-- <h1 class="text-xl font-semibold">Nanti disini ada foto profile user</h1> -->
-	<button
-		type="button"
-		on:click={handleLogout}
-		class="px-4 py-2 rounded text-white font-medium bg-blue-500 hover:bg-blue-600 focus:ring focus:ring-blue-200 transition duration-100 ease-in-out"
-		>Logout</button
+
+	<div
+		class="flex items-center bg-blue-200 hover:bg-blue-300 transition ease-in-out duration-100 rounded-full"
 	>
+		<p class="px-2 font-medium text-gray-700">{username}</p>
+		<button
+			type="button"
+			on:click={handleUserMenu}
+			class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm"
+			id="user-menu-button"
+			aria-expanded="false"
+			aria-haspopup="true"
+		>
+			<img
+				class="h-10 w-10 rounded-full"
+				src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+				alt=""
+			/>
+		</button>
+	</div>
+	{#if showUserMenu}
+		<ul
+			class="absolute right-0 origin-top-right mr-4 mt-10 bg-white ring-1 ring-gray-200 rounded p-1 transition duration-100 ease-in-out"
+			in:fly={{ y: -20, duration: 100 }}
+			out:fly={{ y: -20, duration: 100 }}
+		>
+			<li class="rounded-md group">
+				<button
+					type="button"
+					on:click={handleLogout}
+					class="font-medium text-gray-800 hover:text-blue-600 hover:bg-gray-100 rounded px-2 py-1"
+					>Logout</button
+				>
+			</li>
+		</ul>
+	{/if}
 </header>
