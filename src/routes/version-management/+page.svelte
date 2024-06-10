@@ -15,6 +15,8 @@
 		ip: 'IP Address'
 	};
 	let connectedServer = {};
+	let searchQuery = '';
+	let filteredData = $hospitals;
 
 	const checkRole = () => {
 		role = localStorage.getItem('role');
@@ -60,6 +62,12 @@
 		}
 	};
 
+	// const handleSearch = (query) => {
+	// 	filteredData = $hospitals.filter((hospital) =>
+	// 		hospital.name.toLowerCase().includes(query.toLowerCase())
+	// 	);
+	// };
+
 	onMount(() => {
 		checkRole();
 		checkAccess();
@@ -68,10 +76,23 @@
 
 <div class="flex flex-wrap">
 	<div class={showDetailServerBar ? 'w-9/12' : 'w-12/12'}>
+		<!-- <div class="p-4">
+			<input
+				type="text"
+				name="search"
+				id="search"
+				bind:value={searchQuery}
+				on:keyup={() => handleSearch(searchQuery)}
+				class="px-4 py-2 border rounded w-full focus:outline-blue-400"
+				placeholder="Pencarian berdasarkan nama rumah sakit...."
+				autocomplete="off"
+			/>
+		</div> -->
+
 		<h1 class="text-2xl font-semibold p-4">Version Management</h1>
 
 		<div class="grid grid-cols-3 p-6 gap-5">
-			{#each $hospitals as hospital, index}
+			{#each filteredData as hospital, index}
 				{#if hospital.name !== connectedServer.name}
 					<button
 						type="button"
@@ -138,7 +159,11 @@
 	</div>
 
 	{#if showDetailServerBar}
-		<div class="w-3/12 bg-gradient-to-l from-blue-600 to-cyan-600 min-h-screen max-h-full">
+		<div
+			class="w-3/12 bg-gradient-to-l from-blue-600 to-cyan-600 min-h-screen max-h-full"
+			in:fade={{ y: -20, duration: 100 }}
+			out:fade={{ y: -20, duration: 100 }}
+		>
 			<div class="flex items-center justify-between">
 				<h1 class="text-xl text-gray-100 font-semibold p-4">Host Details</h1>
 				{#if connectedServer.name === detailServer.name}
@@ -170,6 +195,40 @@
 					</div>
 				</div>
 
+				{#if detailServer.name === connectedServer.name}
+					<div class="bg-white rounded p-2 mt-4">
+						<p class="text-sm font-medium">Save Update On:</p>
+						<div class="flex flex-wrap mt-1">
+							<select
+								name="branch"
+								id="branch"
+								class="px-2 py-1 border rounded w-full focus:outline-none focus:ring focus:ring-blue-400"
+							>
+								<option value="">-- Pilih branch --</option>
+								<option value="main">main</option>
+								<option value="feature">feature</option>
+								<option value="bugfix">bugfix</option>
+								<option value="hotfix">hotfix</option>
+								<option value="refactor">refactor</option>
+								<option value="release">release</option>
+								<option value="experiment">experiment</option>
+							</select>
+
+							<select
+								name="db"
+								id="db"
+								class="px-2 py-1 mt-2 border rounded w-full focus:outline-none focus:ring focus:ring-blue-400"
+							>
+								<option value="">-- Pilih database --</option>
+								<option value="db_1">db_1</option>
+								<option value="db_2">db_2</option>
+								<option value="db_3">db_3</option>
+								<option value="db_4">db_4</option>
+							</select>
+						</div>
+					</div>
+				{/if}
+
 				{#if detailServer.name !== connectedServer.name}
 					<button
 						type="button"
@@ -183,6 +242,16 @@
 						on:click={() => disconnectFromServer()}
 						class="mt-4 rounded-md bg-red-400 hover:bg-red-500 transition ease-in-out duration-100 text-white font-semibold py-2"
 						>Disconnect</button
+					>
+					<button
+						type="button"
+						class="mt-4 rounded-md bg-blue-400 hover:bg-blue-500 transition ease-in-out duration-100 text-white font-semibold py-2"
+						>Pull</button
+					>
+					<button
+						type="button"
+						class="mt-4 rounded-md bg-green-400 hover:bg-green-500 transition ease-in-out duration-100 text-white font-semibold py-2"
+						>Update</button
 					>
 				{/if}
 			</div>

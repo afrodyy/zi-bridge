@@ -7,10 +7,10 @@
 
 	let isOpen = true;
 	let showUserMenu = false;
-	let username = '';
+	let name = '';
 
 	const handleLogout = () => {
-		localStorage.removeItem('username');
+		localStorage.removeItem('name');
 		localStorage.removeItem('role');
 		goto('/auth/login');
 	};
@@ -35,7 +35,7 @@
 
 	onMount(() => {
 		sidebarOpen.set(isOpen);
-		username = localStorage.getItem('username');
+		name = localStorage.getItem('name');
 	});
 </script>
 
@@ -58,7 +58,7 @@
 	<div
 		class="flex items-center bg-blue-200 hover:bg-blue-300 transition ease-in-out duration-100 rounded-full"
 	>
-		<p class="px-2 font-medium text-gray-700">{username}</p>
+		<p class="pl-3 pr-2 font-medium text-gray-700">{name}</p>
 		<button
 			type="button"
 			on:click={handleUserMenu}

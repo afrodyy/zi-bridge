@@ -1,45 +1,19 @@
 <script>
 	import '../../../app.css';
 	import { goto } from '$app/navigation';
+	import { users } from '$lib/userStore';
 
 	let formData = {
 		username: '',
 		password: ''
 	};
 
-	const user = [
-		{
-			username: 'admin',
-			password: '123456',
-			role: 'admin'
-		},
-		{
-			username: 'dev',
-			password: '123456',
-			role: 'dev'
-		},
-		{
-			username: 'qa',
-			password: '123456',
-			role: 'qa'
-		},
-		{
-			username: 'masterdata',
-			password: '123456',
-			role: 'master-data'
-		},
-		{
-			username: 'guest',
-			password: '123456',
-			role: 'guest'
-		}
-	];
-
 	const handleLogin = async () => {
-		for (let i = 0; i < user.length; i++) {
-			if (user[i].username === formData.username && user[i].password === formData.password) {
-				localStorage.setItem('username', user[i].username);
-				localStorage.setItem('role', user[i].role);
+		for (let i = 0; i < $users.length; i++) {
+			if ($users[i].username === formData.username && $users[i].password === formData.password) {
+				localStorage.setItem('name', $users[i].name);
+				localStorage.setItem('username', $users[i].username);
+				localStorage.setItem('role', $users[i].role);
 				goto('/dashboard');
 			}
 		}
