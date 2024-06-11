@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { sidebarOpen } from '$lib/store';
 	import { onMount } from 'svelte';
-	import Button from './Button.svelte';
 	import { fly } from 'svelte/transition';
 
 	let isOpen = true;

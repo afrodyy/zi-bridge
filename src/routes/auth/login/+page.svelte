@@ -26,8 +26,8 @@
 			<div
 				class="col-span-2 h-screen bg-gradient-to-b from-blue-600 to-cyan-500 flex flex-col justify-center items-center"
 			>
-				<h1 class="text-white text-5xl font-bold">Zi.Bridge</h1>
-				<h1 class="text-white text-xl">Bridging you to your apps</h1>
+				<h1 class="text-white text-5xl font-bold">Zi.nfinite</h1>
+				<h1 class="text-white text-xl">Tools for your continuous integration</h1>
 			</div>
 		</div>
 		<div class="my-auto px-20 rounded-2xl border-red-500">

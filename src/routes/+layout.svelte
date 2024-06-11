@@ -6,12 +6,6 @@
 	import Header from '../components/Header.svelte';
 
 	$: currentRoute = $page.url.pathname;
-
-	// Set meta tags for the page
-	// meta.set({
-	// 	title: 'Admin Dashboard',
-	// 	description: 'A simple admin dashboard template using Tailwind CSS and SvelteKit.'
-	// });
 </script>
 
 {#if !currentRoute.startsWith('/auth')}
@@ -31,10 +25,6 @@
 			</div>
 		</div>
 	</main>
-
-	<style>
-		/* Add custom styles here if needed */
-	</style>
 {:else}
 	<slot></slot>
 {/if}

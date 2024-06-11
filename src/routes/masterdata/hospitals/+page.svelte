@@ -1,5 +1,5 @@
 <script>
-	import { hospitals } from '$lib/store';
+	import { hospitals } from '$lib/hospitalStore';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 

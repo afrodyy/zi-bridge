@@ -2,9 +2,8 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';
-	import { hospitals } from '$lib/store';
+	import { hospitals } from '$lib/hospitalStore';
 
-	let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
 	let role;
 	let grantAccess;
 	let showDetailServerBar = false;
