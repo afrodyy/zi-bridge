@@ -31,7 +31,7 @@
 
 <div class="flex flex-wrap">
 	<div class="w-full p-4">
-		<h1 class="text-xl font-medium">Database Management</h1>
+		<h1 class="text-xl font-medium mb-4">Database Management</h1>
 
 		<Terminal />
 	</div>

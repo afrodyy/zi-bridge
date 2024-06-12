@@ -54,7 +54,7 @@
 			<button
 				type="button"
 				on:click={() => $count++}
-				class="px-2 py-1 rounded text-white bg-blue-500">Increment</button
+				class="px-2 py-1 rounded text-white bg-yellow-500 hover:bg-yellow-600">Increment</button
 			>
 			<p>Count: {$count}</p>
 		</div>
