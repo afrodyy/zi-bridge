@@ -98,5 +98,68 @@ export const hospitals = writable([
 		ip: '192.168.80.87',
 		branch: 'main',
 		db: 'db_rs_harum'
+	},
+	{
+		name: 'RS Harum Sisma Medika',
+		location: 'Bekasi',
+		ip: '192.168.80.87',
+		branch: 'main',
+		db: 'db_rs_harum'
+	},
+	{
+		name: 'RS Harum Sisma Medika',
+		location: 'Bekasi',
+		ip: '192.168.80.87',
+		branch: 'main',
+		db: 'db_rs_harum'
+	},
+	{
+		name: 'RS Harum Sisma Medika',
+		location: 'Bekasi',
+		ip: '192.168.80.87',
+		branch: 'main',
+		db: 'db_rs_harum'
+	},
+	{
+		name: 'RS Harum Sisma Medika',
+		location: 'Bekasi',
+		ip: '192.168.80.87',
+		branch: 'main',
+		db: 'db_rs_harum'
+	},
+	{
+		name: 'RS Harum Sisma Medika',
+		location: 'Bekasi',
+		ip: '192.168.80.87',
+		branch: 'main',
+		db: 'db_rs_harum'
+	},
+	{
+		name: 'RS Harum Sisma Medika',
+		location: 'Bekasi',
+		ip: '192.168.80.87',
+		branch: 'main',
+		db: 'db_rs_harum'
+	},
+	{
+		name: 'RS Harum Sisma Medika',
+		location: 'Bekasi',
+		ip: '192.168.80.87',
+		branch: 'main',
+		db: 'db_rs_harum'
+	},
+	{
+		name: 'RS Harum Sisma Medika',
+		location: 'Bekasi',
+		ip: '192.168.80.87',
+		branch: 'main',
+		db: 'db_rs_harum'
+	},
+	{
+		name: 'RS Harum Sisma Medika',
+		location: 'Bekasi',
+		ip: '192.168.80.87',
+		branch: 'main',
+		db: 'db_rs_harum'
 	}
 ]);

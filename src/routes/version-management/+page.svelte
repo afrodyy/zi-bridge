@@ -90,7 +90,8 @@
 
 		<h1 class="text-2xl font-semibold p-4">Version Management</h1>
 
-		<div class="grid grid-cols-3 p-6 gap-5">
+		<!-- Main Content -->
+		<div class="grid grid-cols-3 p-6 gap-5 overflow-auto max-h-96">
 			{#each filteredData as hospital, index}
 				{#if hospital.name !== connectedServer.name}
 					<button
@@ -155,11 +156,13 @@
 				{/if}
 			{/each}
 		</div>
+		<!-- End of Main Content -->
 	</div>
 
+	<!-- Detail Server Bar -->
 	{#if showDetailServerBar}
 		<div
-			class="w-3/12 bg-gradient-to-l from-blue-600 to-cyan-600 min-h-screen max-h-full"
+			class="w-3/12 bg-gradient-to-l from-blue-600 to-cyan-600 min-h-max"
 			in:fade={{ y: -20, duration: 100 }}
 			out:fade={{ y: -20, duration: 100 }}
 		>
@@ -256,4 +259,13 @@
 			</div>
 		</div>
 	{/if}
+	<!-- End of Detail Server Bar -->
+
+	<div class="fixed bottom-0 w-7/12">
+		<textarea
+			name="test"
+			id="test"
+			class="w-full h-20 bg-gray-900 p-1 resize-none text-gray-200 rounded">Test</textarea
+		>
+	</div>
 </div>
