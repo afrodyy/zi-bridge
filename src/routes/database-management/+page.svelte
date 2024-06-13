@@ -129,7 +129,7 @@
 				{#if index + 1 === currentPage}
 					<div class="mt-4">
 						<div class="flex justify-between items-center mb-2">
-							<h2 class="text-lg font-semibold">Nama file: {file.name}</h2>
+							<h2 class="text-lg font-semibold">Preview: {file.name}</h2>
 							<div class="flex flex-nowrap gap-1">
 								<button
 									type="button"
@@ -156,7 +156,7 @@
 							</div>
 						</div>
 						<pre
-							class="bg-gray-100 p-4 rounded text-wrap max-h-80 overflow-y-auto border border-blue-300">
+							class="bg-gray-100 p-4 rounded text-wrap max-h-64 overflow-y-auto border border-blue-300">
 							{file.content}
 						</pre>
 					</div>
@@ -246,6 +246,14 @@
 					</nav>
 				</div>
 			</div>
+
+			<!-- <textarea
+				name=""
+				id=""
+				class="mt-5 fixed bottom-0 w-full bg-gray-800 text-gray-100 rounded p-1">Test</textarea
+			> -->
+			<pre
+				class="mt-5 fixed bottom-0 w-full bg-gray-800 text-gray-100 rounded p-1 text-wrap overflow-y-auto max-h-20 pl-1 pr-3">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem at itaque officia fugiat repellendus? Maiores et aspernatur saepe maxime vero quasi magnam dolorum quis consequatur, adipisci doloremque ipsam asperiores sunt nihil modi porro alias corporis obcaecati quidem optio voluptatem. Odit facere dolorum molestias consequatur tenetur tempora voluptates blanditiis pariatur, aperiam culpa numquam quis repellendus veniam possimus iste expedita dolorem ea accusantium quaerat nulla. Rerum mollitia consectetur eaque eveniet ut nesciunt nobis delectus illum assumenda debitis error cumque cupiditate dicta aut at ipsum aliquid beatae veritatis, quaerat neque sit enim? Nihil, impedit iste repellat nemo accusantium adipisci vitae cupiditate pariatur, totam, dicta ullam molestiae aspernatur quo tenetur dolorem delectus distinctio inventore cum deleniti libero. Animi, eum voluptates in sapiente facilis nam aliquid mollitia obcaecati possimus, ab commodi eius necessitatibus fugit perspiciatis minus tempora quisquam ipsum quia laudantium quae. Alias laudantium earum reiciendis similique commodi quibusdam dolore dignissimos maxime. Autem rem ab itaque, sit ducimus quam nihil, cupiditate deleniti nemo quia odio ex dicta, eligendi consectetur praesentium accusamus maiores? Reprehenderit, unde? Est vel quos sit corrupti iste voluptates dignissimos aut dicta aliquam tenetur, sed libero voluptatibus debitis quisquam consequuntur dolore ex in earum ducimus id tempora sint assumenda! Accusamus alias natus assumenda!</pre>
 		{/if}
 		<!-- End of Pagination -->
 	</div>
