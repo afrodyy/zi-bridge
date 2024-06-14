@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import Terminal from '../../components/Terminal.svelte';
+	// import Terminal from '../../components/Terminal.svelte';
 
 	let role;
 	let grantAccess;
@@ -69,9 +69,10 @@
 	function handleFileChange(event) {
 		if (event === 'refresh') {
 			const selectedFiles = files;
-			handleFiles(selectedFiles);
 			files = [];
 			fileContents = [];
+			currentPage = 1;
+			handleFiles(selectedFiles);
 		} else {
 			const selectedFiles = event.target.files;
 			handleFiles(selectedFiles);
@@ -90,7 +91,6 @@
 		if (confirm('Anda ingin menghapus file ini?')) {
 			fileContents.splice(index, 1);
 			files.splice(index, 1);
-			console.log(files, '<<<< File', fileContents, '<<<< File Content');
 			handleFileChange('refresh');
 		}
 	}
@@ -98,6 +98,8 @@
 	function removeFiles() {
 		if (confirm('Anda ingin menghapus semua file yang sudah diupload?')) {
 			fileContents = [];
+			files = [];
+			currentPage = 1;
 		}
 	}
 
@@ -246,16 +248,18 @@
 					</nav>
 				</div>
 			</div>
+		{/if}
+		<!-- End of Pagination -->
 
+		{#if fileContents.length > 0}
 			<!-- <textarea
 				name=""
 				id=""
 				class="mt-5 fixed bottom-0 w-full bg-gray-800 text-gray-100 rounded p-1">Test</textarea
 			> -->
 			<pre
-				class="mt-5 fixed bottom-0 w-full bg-gray-800 text-gray-100 rounded p-1 text-wrap overflow-y-auto max-h-20 pl-1 pr-3">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem at itaque officia fugiat repellendus? Maiores et aspernatur saepe maxime vero quasi magnam dolorum quis consequatur, adipisci doloremque ipsam asperiores sunt nihil modi porro alias corporis obcaecati quidem optio voluptatem. Odit facere dolorum molestias consequatur tenetur tempora voluptates blanditiis pariatur, aperiam culpa numquam quis repellendus veniam possimus iste expedita dolorem ea accusantium quaerat nulla. Rerum mollitia consectetur eaque eveniet ut nesciunt nobis delectus illum assumenda debitis error cumque cupiditate dicta aut at ipsum aliquid beatae veritatis, quaerat neque sit enim? Nihil, impedit iste repellat nemo accusantium adipisci vitae cupiditate pariatur, totam, dicta ullam molestiae aspernatur quo tenetur dolorem delectus distinctio inventore cum deleniti libero. Animi, eum voluptates in sapiente facilis nam aliquid mollitia obcaecati possimus, ab commodi eius necessitatibus fugit perspiciatis minus tempora quisquam ipsum quia laudantium quae. Alias laudantium earum reiciendis similique commodi quibusdam dolore dignissimos maxime. Autem rem ab itaque, sit ducimus quam nihil, cupiditate deleniti nemo quia odio ex dicta, eligendi consectetur praesentium accusamus maiores? Reprehenderit, unde? Est vel quos sit corrupti iste voluptates dignissimos aut dicta aliquam tenetur, sed libero voluptatibus debitis quisquam consequuntur dolore ex in earum ducimus id tempora sint assumenda! Accusamus alias natus assumenda!</pre>
+				class="mt-5 fixed bottom-0 max-w-full bg-gray-800 text-gray-100 rounded p-1 text-wrap overflow-y-auto max-h-20 pl-1 pr-3">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem at itaque officia fugiat repellendus? Maiores et aspernatur saepe maxime vero quasi magnam dolorum quis consequatur, adipisci doloremque ipsam asperiores sunt nihil modi porro alias corporis obcaecati quidem optio voluptatem. Odit facere dolorum molestias consequatur tenetur tempora voluptates blanditiis pariatur, aperiam culpa numquam quis repellendus veniam possimus iste expedita dolorem ea accusantium quaerat nulla. Rerum mollitia consectetur eaque eveniet ut nesciunt nobis delectus illum assumenda debitis error cumque cupiditate dicta aut at ipsum aliquid beatae veritatis, quaerat neque sit enim? Nihil, impedit iste repellat nemo accusantium adipisci vitae cupiditate pariatur, totam, dicta ullam molestiae aspernatur quo tenetur dolorem delectus distinctio inventore cum deleniti libero. Animi, eum voluptates in sapiente facilis nam aliquid mollitia obcaecati possimus, ab commodi eius necessitatibus fugit perspiciatis minus tempora quisquam ipsum quia laudantium quae. Alias laudantium earum reiciendis similique commodi quibusdam dolore dignissimos maxime. Autem rem ab itaque, sit ducimus quam nihil, cupiditate deleniti nemo quia odio ex dicta, eligendi consectetur praesentium accusamus maiores? Reprehenderit, unde? Est vel quos sit corrupti iste voluptates dignissimos aut dicta aliquam tenetur, sed libero voluptatibus debitis quisquam consequuntur dolore ex in earum ducimus id tempora sint assumenda! Accusamus alias natus assumenda!</pre>
 		{/if}
-		<!-- End of Pagination -->
 	</div>
 </div>
 
