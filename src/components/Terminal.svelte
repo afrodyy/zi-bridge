@@ -1,48 +1,17 @@
 <script>
+	import { headerWidth } from '$lib/index';
 	import { onMount } from 'svelte';
-	import { Terminal } from '@xterm/xterm';
-	import 'xterm/css/xterm.css';
 
-	let term;
+	$: terminalWidth = 0;
 
 	onMount(() => {
-		term = new Terminal();
-		term.open(document.getElementById('terminal-container'));
-		term.write('zinfinite$ ');
-
-		let command = '';
-		let cursorPosition = 0;
-
-		// Enable user input
-		term.onKey(({ key, domEvent }) => {
-			console.log(key);
-			const char = key;
-			const printable =
-				domEvent.key !== 'Backspace' && domEvent.key !== 'Delete' && domEvent.key !== 'Enter';
-
-			if (domEvent.key === 'Enter') {
-				term.write('\r\nzinfinite$ ');
-				command = ''; // Reset command
-				cursorPosition = 0;
-			} else if (domEvent.key === 'Backspace') {
-				// Do not delete the prompt
-				if (cursorPosition > 0) {
-					term.write('\b \b');
-					command = command.slice(0, cursorPosition - 1) + command.slice(cursorPosition);
-					cursorPosition--;
-				}
-			} else if (domEvent.key === 'Delete') {
-				if (cursorPosition < command.length) {
-					term.write('\b \b'); // Move the cursor left, write a space to "delete" the character, then move the cursor back
-					command = command.slice(0, cursorPosition) + command.slice(cursorPosition + 1);
-				}
-			} else if (printable) {
-				term.write(char);
-				command = command.slice(0, cursorPosition) + char + command.slice(cursorPosition);
-				cursorPosition++;
-			}
-		});
+		terminalWidth = $headerWidth;
 	});
 </script>
 
-<div id="terminal-container"></div>
+<div class="grid grid-cols-1 content-end">
+	<pre
+		class="h-16 bg-gray-800 p-1 text-gray-200 text-wrap rounded-tl overflow-y-scroll"
+		style="width: {terminalWidth}px;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui aspernatur magnam laborum facere ut quae vel maxime eaque vero beatae, atque quibusdam a aliquid nesciunt saepe inventore dolorum delectus alias dolor dolores cum? Molestias explicabo facilis tenetur doloremque architecto optio dolore error ea, reiciendis repellendus accusamus recusandae expedita aspernatur dolor eius nobis asperiores quae minima totam repellat vel! Incidunt veniam repudiandae repellendus eaque nobis. Deleniti repudiandae dolor soluta distinctio quas voluptatem esse voluptatum corrupti eligendi, tempore quis at nihil repellendus neque accusantium reiciendis eos amet obcaecati harum sunt nisi voluptatibus libero ipsa. Doloribus porro blanditiis natus, nulla sapiente, aperiam ipsum ratione accusantium sit quisquam laboriosam assumenda culpa fuga reiciendis dolor eius dolorem ut quis dolore. Quaerat tempora ad quasi necessitatibus a iste quo at deserunt? Consequatur soluta nobis sint atque excepturi neque ipsa dolor corporis dolorum doloribus quas in, dolorem quod qui dolore, aspernatur necessitatibus nisi fuga totam accusantium dignissimos. Nulla delectus blanditiis pariatur, magni recusandae atque, modi, nisi laboriosam nihil inventore quibusdam reprehenderit. Mollitia nemo quia soluta sunt, odio aperiam saepe reprehenderit maiores quo quidem nihil blanditiis quos sapiente corporis molestiae veniam quas? Perferendis sed beatae amet commodi dolorum molestias reiciendis ipsa! Quaerat quo laboriosam molestiae nemo, explicabo commodi?
+    </pre>
+</div>

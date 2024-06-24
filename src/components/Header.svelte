@@ -1,12 +1,16 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { sidebarOpen } from '$lib/store';
+	import { headerHeight, headerWidth } from '$lib/index';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 
 	let isOpen = true;
 	let showUserMenu = false;
 	let name = '';
+	let header;
+	let height;
+	let width;
 
 	const handleLogout = () => {
 		localStorage.removeItem('name');
@@ -33,12 +37,20 @@
 	}
 
 	onMount(() => {
-		sidebarOpen.set(isOpen);
 		name = localStorage.getItem('name');
+		sidebarOpen.set(isOpen);
+
+		height = header.getBoundingClientRect().height;
+		width = header.getBoundingClientRect().width;
+		headerHeight.set(height);
+		headerWidth.set(width);
+
+		console.log(`Header Height: ${$headerHeight}px`);
+		console.log(`Header Width: ${$headerWidth}px`);
 	});
 </script>
 
-<header class="bg-white shadow p-4 mb-4 flex justify-between">
+<header bind:this={header} class="h-16 bg-white shadow p-4 flex justify-between rounded-bl">
 	<button
 		type="button"
 		on:click={handleToggleSidebar}

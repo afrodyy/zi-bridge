@@ -1,13 +1,18 @@
 <script>
 	import { onMount } from 'svelte';
 	import { sidebarOpen } from '$lib/store';
+	import { sidebarHeight, sidebarWidth } from '$lib/index';
 	import { fade, fly } from 'svelte/transition';
 
 	$: role = '';
+	$: isLinkActive = '';
 
 	let isOpen;
 	let isMasterDataOpen = false;
 	let isGeneratorOpen = false;
+	let divElement;
+	let height;
+	let width;
 
 	sidebarOpen.subscribe((value) => {
 		isOpen = value;
@@ -15,7 +20,37 @@
 
 	onMount(() => {
 		role = localStorage.getItem('role');
+		height = divElement.getBoundingClientRect().height;
+		width = divElement.getBoundingClientRect().width;
+		sidebarHeight.set(height);
+		sidebarWidth.set(width);
+		// console.log(`Sidebar Height: ${$sidebarHeight}px`);
+		// console.log(`Sidebar Width: ${$sidebarWidth}px`);
+		checkUrl();
 	});
+
+	const checkUrl = (url) => {
+		console.log(url);
+		if (url === 'dashboard') {
+			isLinkActive = 'dashboard';
+		} else if (url === 'version-management') {
+			isLinkActive = 'version-management';
+		} else if (url === 'database-management') {
+			isLinkActive = 'database-management';
+		} else if (url === 'user-management') {
+			isLinkActive = 'user-management';
+		} else if (url === 'logs') {
+			isLinkActive = 'logs';
+		} else {
+			isLinkActive = 'dashboard';
+		}
+	};
+
+	const handleKeyPressUrl = (event, url) => {
+		if (event.key === 'Enter' || event.key === ' ') {
+			checkUrl(url);
+		}
+	};
 
 	function toggleMasterData() {
 		isMasterDataOpen = !isMasterDataOpen;
@@ -28,7 +63,8 @@
 
 {#if isOpen}
 	<aside
-		class="bg-gradient-to-r from-blue-600 to-cyan-600 shadow w-1/5 min-h-screen max-h-full"
+		bind:this={divElement}
+		class="bg-gradient-to-r from-blue-600 to-cyan-600 shadow"
 		in:fade={{ y: -20, duration: 50 }}
 		out:fade={{ y: -20, duration: 50 }}
 	>
@@ -43,7 +79,10 @@
 		<nav class="p-3">
 			<ul>
 				<li
-					class="flex items-center py-2 px-4 my-2 hover:bg-gray-200 rounded-md group cursor-pointer"
+					class="flex items-center py-2 px-4 my-2 hover:bg-gray-200 rounded-md group cursor-pointer {isLinkActive ===
+					'dashboard'
+						? 'bg-gray-200'
+						: ''}"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +90,9 @@
 						viewBox="0 0 24 24"
 						stroke-width="1.5"
 						stroke="currentColor"
-						class="size-6 text-gray-200 group-hover:text-blue-500 mr-2"
+						class="size-6 {isLinkActive === 'dashboard'
+							? 'text-blue-500'
+							: 'text-gray-200'}  group-hover:text-blue-500 mr-2"
 					>
 						<path
 							stroke-linecap="round"
@@ -59,14 +100,26 @@
 							d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
 						/>
 					</svg>
-					<a href="/dashboard" class="font-medium text-gray-200 group-hover:text-blue-500">
+					<a
+						on:click={() => checkUrl('dashboard')}
+						on:keypress={() => handleKeyPressUrl('dashboard')}
+						tabindex="0"
+						role="button"
+						href="/dashboard"
+						class="font-medium {isLinkActive === 'dashboard'
+							? 'text-blue-500'
+							: 'text-gray-200'}  group-hover:text-blue-500"
+					>
 						Dashboard
 					</a>
 				</li>
 
 				{#if role == 'admin' || role == 'dev' || role == 'qa'}
 					<li
-						class="flex items-center py-2 px-4 my-2 hover:bg-gray-200 rounded-md group cursor-pointer"
+						class="flex items-center py-2 px-4 my-2 hover:bg-gray-200 rounded-md group cursor-pointer {isLinkActive ===
+						'version-management'
+							? 'bg-gray-200'
+							: ''}"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +127,9 @@
 							viewBox="0 0 24 24"
 							stroke-width="1.5"
 							stroke="currentColor"
-							class="size-6 text-gray-200 group-hover:text-blue-500 mr-2"
+							class="size-6 {isLinkActive === 'version-management'
+								? 'text-blue-500'
+								: 'text-gray-200'}  group-hover:text-blue-500 mr-2"
 						>
 							<path
 								stroke-linecap="round"
@@ -83,15 +138,25 @@
 							/>
 						</svg>
 						<a
+							on:click={() => checkUrl('version-management')}
+							on:keypress={() => handleKeyPressUrl('version-management')}
+							tabindex="0"
+							role="button"
 							href="/version-management"
-							class="font-medium text-gray-200 group-hover:text-blue-500">Version Management</a
+							class="font-medium {isLinkActive === 'version-management'
+								? 'text-blue-500'
+								: 'text-gray-200'}  group-hover:text-blue-500"
 						>
+							Version Management
+						</a>
 					</li>
 				{/if}
 
 				{#if role == 'admin' || role == 'dev'}
 					<li
-						class="flex items-center py-2 px-4 my-2 hover:bg-gray-200 rounded-md group cursor-pointer"
+						class="{isLinkActive === 'database-management'
+							? 'bg-gray-200'
+							: ''} flex items-center py-2 px-4 my-2 hover:bg-gray-200 rounded-md group cursor-pointer"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +164,9 @@
 							viewBox="0 0 24 24"
 							stroke-width="1.5"
 							stroke="currentColor"
-							class="size-6 text-gray-200 group-hover:text-blue-500 mr-2"
+							class="size-6 {isLinkActive === 'database-management'
+								? 'text-blue-500'
+								: 'text-gray-200'} group-hover:text-blue-500 mr-2"
 						>
 							<path
 								stroke-linecap="round"
@@ -109,9 +176,17 @@
 						</svg>
 
 						<a
+							on:click={() => checkUrl('database-management')}
+							on:keypress={() => handleKeyPressUrl('database-management')}
+							tabindex="0"
+							role="button"
 							href="/database-management"
-							class="font-medium text-gray-200 group-hover:text-blue-500">Database Management</a
+							class="font-medium {isLinkActive === 'database-management'
+								? 'text-blue-500'
+								: 'text-gray-200'}  group-hover:text-blue-500"
 						>
+							Database Management
+						</a>
 					</li>
 				{/if}
 
@@ -192,14 +267,20 @@
 				{/if}
 
 				{#if role == 'admin'}
-					<li class="flex items-center py-2 px-4 my-2 hover:bg-gray-200 rounded-md group">
+					<li
+						class="{isLinkActive === 'user-management'
+							? 'bg-gray-200'
+							: ''} flex items-center py-2 px-4 my-2 hover:bg-gray-200 rounded-md group"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
 							stroke-width="1.5"
 							stroke="currentColor"
-							class="size-6 text-gray-200 group-hover:text-blue-500 mr-2"
+							class="size-6 {isLinkActive === 'user-management'
+								? 'text-blue-500'
+								: 'text-gray-200'} group-hover:text-blue-500 mr-2"
 						>
 							<path
 								stroke-linecap="round"
@@ -208,8 +289,15 @@
 							/>
 						</svg>
 
-						<a href="/user-management" class="font-medium text-gray-200 group-hover:text-blue-500"
-							>User Management</a
+						<a
+							on:click={() => checkUrl('user-management')}
+							on:keypress={() => handleKeyPressUrl('user-management')}
+							tabindex="0"
+							role="button"
+							href="/user-management"
+							class="font-medium {isLinkActive === 'user-management'
+								? 'text-blue-500'
+								: 'text-gray-200'}  group-hover:text-blue-500">User Management</a
 						>
 					</li>
 				{/if}
@@ -282,14 +370,20 @@
 					</li>
 				{/if}
 
-				<li class="flex items-center py-2 px-4 my-2 hover:bg-gray-200 rounded-md group">
+				<li
+					class="{isLinkActive === 'logs'
+						? 'bg-gray-200'
+						: ''} flex items-center py-2 px-4 my-2 hover:bg-gray-200 rounded-md group"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke-width="1.5"
 						stroke="currentColor"
-						class="size-6 text-gray-200 group-hover:text-blue-500 mr-2"
+						class="size-6 {isLinkActive === 'logs'
+							? 'text-blue-500'
+							: 'text-gray-200'} group-hover:text-blue-500 mr-2"
 					>
 						<path
 							stroke-linecap="round"
@@ -298,7 +392,16 @@
 						/>
 					</svg>
 
-					<a href="/logs" class="font-medium text-gray-200 group-hover:text-blue-500">Logs</a>
+					<a
+						on:click={() => checkUrl('logs')}
+						on:keypress={() => handleKeyPressUrl('logs')}
+						tabindex="0"
+						role="button"
+						href="/logs"
+						class="font-medium {isLinkActive === 'logs'
+							? 'text-blue-500'
+							: 'text-gray-200'}  group-hover:text-blue-500">Logs</a
+					>
 				</li>
 			</ul>
 		</nav>
