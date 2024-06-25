@@ -29,6 +29,8 @@
 	"type": "module",
 	"dependencies": {
 		"@xterm/xterm": "^5.5.0",
-		"ace-builds": "^1.35.0"
+		"ace-builds": "^1.35.0",
+		"monaco-editor": "^0.50.0",
+		"sql-lint": "^1.0.0"
 	}
 }

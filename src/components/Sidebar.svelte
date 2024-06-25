@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { sidebarOpen } from '$lib/store';
-	import { sidebarHeight, sidebarWidth } from '$lib/index';
+	import { sidebarOpen, sidebarHeight, sidebarWidth } from '$lib/store';
 	import { fade, fly } from 'svelte/transition';
 
 	$: role = '';

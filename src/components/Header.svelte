@@ -1,7 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { sidebarOpen } from '$lib/store';
-	import { headerHeight, headerWidth } from '$lib/index';
+	import { sidebarOpen, headerHeight, headerWidth } from '$lib/store';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 

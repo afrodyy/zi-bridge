@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { sidebarHeight, headerHeight } from '$lib/index';
+	import { sidebarHeight, headerHeight } from '$lib/store';
 	import 'ace-builds/src-noconflict/ace';
 	import 'ace-builds/src-noconflict/mode-sql';
 	import 'ace-builds/src-noconflict/theme-dreamweaver';
@@ -95,7 +95,7 @@
 			sqlPreviews.setOption('printMargin', false);
 			sqlPreviews.setOption('fontSize', 13);
 			sqlPreviews.setReadOnly(true);
-			sqlPreviews.setValue(e.target.result, -1);
+			sqlPreviews.setValue(fileContents[0].content, -1);
 		};
 		reader.readAsText(file);
 	}

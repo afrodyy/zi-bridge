@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 	import { hospitals } from '$lib/hospitalStore';
-	import { sidebarHeight, headerHeight } from '$lib/index';
+	import { sidebarHeight, headerHeight } from '$lib/store';
 
 	let role;
 	let grantAccess;

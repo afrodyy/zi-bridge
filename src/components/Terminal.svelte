@@ -1,6 +1,5 @@
 <script>
-	import { headerWidth, headerHeight } from '$lib/index';
-	import { onMount } from 'svelte';
+	import { headerWidth, headerHeight } from '$lib/store';
 </script>
 
 <div class="grid grid-cols-1 content-end">

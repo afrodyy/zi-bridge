@@ -6,7 +6,8 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@xterm/xterm': '@xterm/xterm/lib/xterm.js',
-			'xterm/css/xterm.css': '@xterm/xterm/css/xterm.css'
+			'xterm/css/xterm.css': '@xterm/xterm/css/xterm.css',
+			'monaco-editor': 'monaco-editor/esm/vs/editor/editor.main.js'
 		}
 	},
 	optimizeDeps: {
