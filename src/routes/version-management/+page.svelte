@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 	import { hospitals } from '$lib/hospitalStore';
+	import { sidebarHeight, headerHeight } from '$lib/index';
 
 	let role;
 	let grantAccess;
@@ -14,7 +15,7 @@
 		ip: 'IP Address'
 	};
 	let connectedServer = [];
-	let filteredData = [...$hospitals, ...$hospitals];
+	let filteredData = $hospitals;
 
 	const checkRole = () => {
 		role = localStorage.getItem('role');
@@ -63,10 +64,16 @@
 	onMount(() => {
 		checkRole();
 		checkAccess();
+
+		// console.log($sidebarHeight, $headerHeight);
 	});
 </script>
 
-<div class="bg-white overflow-y-scroll flex flex-wrap h-[calc(641px-72px-72px-32px)]">
+<!-- Tinggi sidebar - tinggi header - tinggi terminal - space -->
+<div
+	class="flex flex-wrap bg-white shadow-md overflow-y-scroll"
+	style="height: calc({$sidebarHeight}px - {$headerHeight}px - {$headerHeight}px - 32px);"
+>
 	<div class={showDetailServerBar ? 'w-9/12' : 'w-12/12'}>
 		<div>
 			<!-- Main Content -->

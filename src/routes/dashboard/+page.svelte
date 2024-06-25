@@ -2,13 +2,17 @@
 	import Button from '../../components/Button.svelte';
 	import Card from '../../components/Card.svelte';
 	import { count } from '$lib/store';
+	import { sidebarHeight, headerHeight } from '$lib/index';
 </script>
 
-<!-- Page Title -->
-<h1 class="text-xl font-semibold p-4">Dashboard Page</h1>
-
 <!-- Content Area -->
-<div class="p-4">
+<div
+	class="bg-white p-4 shadow-md"
+	style="height: calc({$sidebarHeight}px - {$headerHeight}px - 32px);"
+>
+	<!-- Page Title -->
+	<h1 class="text-xl font-semibold">Dashboard Page</h1>
+
 	<!-- Content -->
 	<p class="font-medium mb-3">Buttons:</p>
 

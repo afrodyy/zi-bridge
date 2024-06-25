@@ -24,13 +24,12 @@
 		width = divElement.getBoundingClientRect().width;
 		sidebarHeight.set(height);
 		sidebarWidth.set(width);
-		// console.log(`Sidebar Height: ${$sidebarHeight}px`);
-		// console.log(`Sidebar Width: ${$sidebarWidth}px`);
+		console.log(`Sidebar Height: ${$sidebarHeight}px`);
+		console.log(`Sidebar Width: ${$sidebarWidth}px`);
 		checkUrl();
 	});
 
 	const checkUrl = (url) => {
-		console.log(url);
 		if (url === 'dashboard') {
 			isLinkActive = 'dashboard';
 		} else if (url === 'version-management') {
@@ -42,7 +41,7 @@
 		} else if (url === 'logs') {
 			isLinkActive = 'logs';
 		} else {
-			isLinkActive = 'dashboard';
+			isLinkActive = null;
 		}
 	};
 

@@ -1,0 +1,290 @@
+<script>
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { sidebarHeight, headerHeight } from '$lib/index';
+
+	let role;
+	let grantAccess;
+	let divContent;
+	let divContentHeight;
+	let divTes1;
+	let divTes2;
+	let divTes3;
+
+	$: files = [];
+	$: fileContents = [];
+
+	let isDragging = false;
+	const itemsPerPage = 1;
+	let currentPage = 1;
+
+	const checkRole = () => {
+		role = localStorage.getItem('role');
+
+		if (role === 'admin' || role === 'dev') {
+			grantAccess = true;
+		} else {
+			grantAccess = false;
+		}
+	};
+
+	const checkAccess = () => {
+		if (!grantAccess) {
+			alert('Anda tidak memiliki akses ke modul ini');
+			goto('/dashboard');
+		}
+	};
+
+	onMount(() => {
+		checkRole();
+		checkAccess();
+
+		const top = divTes2.getBoundingClientRect().top - divTes1.getBoundingClientRect().top;
+		divContentHeight = divContent.getBoundingClientRect().height - top;
+	});
+
+	async function handleFiles(selectedFiles) {
+		for (let i = 0; i < selectedFiles.length; i++) {
+			if (selectedFiles[i].name.slice(-3) === 'sql') {
+				files = [...files, selectedFiles[i]];
+				await readFileContent(selectedFiles[i]);
+			} else {
+				alert('Hanya file dengan ekstensi .sql yang diperbolehkan');
+			}
+		}
+	}
+
+	function handleDragOver(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		isDragging = true;
+	}
+
+	function handleDragLeave(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		isDragging = false;
+	}
+
+	function handleDrop(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		const selectedFiles = event.dataTransfer.files;
+		handleFiles(selectedFiles);
+		isDragging = false;
+	}
+
+	function handleFileChange(event) {
+		if (event === 'refresh') {
+			const selectedFiles = files;
+			files = [];
+			fileContents = [];
+			currentPage = 1;
+			handleFiles(selectedFiles);
+		} else {
+			const selectedFiles = event.target.files;
+			handleFiles(selectedFiles);
+		}
+	}
+
+	async function readFileContent(file) {
+		const reader = file.stream().getReader();
+		const decoder = new TextDecoder();
+		let content = '';
+		while (true) {
+			const { done, value } = await reader.read();
+			if (done) {
+				break;
+			}
+			content += decoder.decode(value, { stream: true });
+			fileContents = [...fileContents, { name: file.name, content }]; // Update file content incrementally
+		}
+		content += decoder.decode(); // Decode any remaining bytes
+	}
+
+	function removeFile(index) {
+		if (confirm('Anda ingin menghapus file ini?')) {
+			fileContents.splice(index, 1);
+			files.splice(index, 1);
+			handleFileChange('refresh');
+		}
+	}
+
+	function removeFiles() {
+		if (confirm('Anda ingin menghapus semua file yang sudah diupload?')) {
+			fileContents = [];
+			files = [];
+			currentPage = 1;
+		}
+	}
+
+	function goToPage(page) {
+		currentPage = page;
+	}
+</script>
+
+<div
+	bind:this={divContent}
+	class="bg-white shadow-md rounded-tl-md rounded-bl-md overflow-y-auto flex flex-wrap"
+	style="height: calc({$sidebarHeight}px - {$headerHeight}px - {$headerHeight}px - 32px);"
+>
+	<div class="w-full" bind:this={divTes1}>
+		{#if fileContents.length < 1}
+			<div class="h-full p-5" bind:this={divTes2}>
+				<button
+					bind:this={divTes3}
+					type="button"
+					class="dropzone w-full h-full rounded-l {isDragging ? 'dragover' : ''}"
+					on:dragover={handleDragOver}
+					on:dragleave={handleDragLeave}
+					on:drop={handleDrop}
+					on:click={() => document.getElementById('file-input').click()}
+				>
+					Drag and drop .sql files here or click to upload
+				</button>
+				<input type="file" id="file-input" multiple class="hidden" on:change={handleFileChange} />
+			</div>
+		{:else}
+			<!-- Loop file content -->
+			{#each fileContents as file, index}
+				{#if index + 1 === currentPage}
+					<div class="p-5">
+						<div class="flex justify-between items-center mb-2">
+							<h2 class="text-lg font-semibold">Preview: {file.name}</h2>
+							<div class="flex flex-nowrap gap-1">
+								<button
+									type="button"
+									on:click={() => removeFile(index)}
+									class="px-2 py-1 rounded text-white bg-lime-500 hover:bg-lime-600 transition ease-in-out duration-100"
+								>Remove</button>
+								<button
+									type="button"
+									class="px-2 py-1 rounded text-white bg-lime-500 hover:bg-lime-600 transition ease-in-out duration-100"
+								>Execute</button>
+								<button
+									type="button"
+									on:click={() => removeFiles()}
+									class="px-2 py-1 rounded text-white bg-red-500 hover:bg-red-600 transition ease-in-out duration-100"
+								>Remove All</button>
+								<button
+									type="button"
+									class="px-2 py-1 rounded text-white bg-red-500 hover:bg-red-600 transition ease-in-out duration-100"
+								>Execute All</button>
+							</div>
+						</div>
+
+						<!-- Preview SQL -->
+						<pre
+							class="bg-gray-100 p-4 rounded text-wrap overflow-y-auto border border-blue-300"
+							style="height: 300px;">
+							{file.content}
+						</pre>
+						<!-- Preview SQL -->
+					</div>
+				{/if}
+			{/each}
+			<!-- End of Loop file content -->
+
+			<!-- Pagination -->
+			{#if fileContents.length > 1}
+				<div class="grid grid-cols-1 gap-2 justify-center px-5">
+					<div>
+						<p class="text-sm text-gray-700">
+							File ke
+							<span class="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span>
+							dari
+							<span class="font-medium">{fileContents.length}</span>
+							File
+						</p>
+					</div>
+					<div>
+						<nav
+							class="isolate inline-flex -space-x-px rounded-md shadow-sm"
+							aria-label="Pagination"
+						>
+							<button
+								type="button"
+								class="{currentPage === 1 ? 'cursor-not-allowed' : ''} relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+								on:click={() => goToPage(currentPage - 1)}
+								disabled={currentPage === 1}
+							>
+								<span class="sr-only">Previous</span>
+								<!-- Previous button icon -->
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="size-4"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M15.75 19.5 8.25 12l7.5-7.5"
+									/>
+								</svg>
+							</button>
+
+							<!-- Pagination buttons -->
+							{#each Array.from({ length: Math.ceil(fileContents.length / itemsPerPage) }, (_, i) => i + 1) as page}
+								<button
+									type="button"
+									class="relative inline-flex items-center px-4 py-2 text-sm font-semibold {currentPage === page ? 'bg-blue-500 text-white hover:bg-blue-600' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200'} focus:z-20 focus:outline-offset-0 transition ease-in-out duration-50"
+									on:click={() => goToPage(page)}
+								>
+									{page}
+								</button>
+							{/each}
+
+							<button
+								type="button"
+								class="{currentPage === fileContents.length ? 'cursor-not-allowed' : ''} relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+								on:click={() => goToPage(currentPage + 1)}
+								disabled={currentPage === fileContents.length}
+							>
+								<span class="sr-only">Next</span>
+								<!-- Next button icon -->
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="size-4"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="m8.25 4.5 7.5 7.5-7.5 7.5"
+									/>
+								</svg>
+							</button>
+						</nav>
+					</div>
+				</div>
+			{/if}
+			<!-- End of Pagination -->
+		{/if}
+	</div>
+</div>
+
+<style>
+	.dropzone {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 20px;
+		border: 2px dashed #ccc;
+		cursor: pointer;
+		transition: border-color 0.3s;
+	}
+
+	.dropzone:hover {
+		border-color: #aaa;
+	}
+
+	.dropzone.dragover {
+		border-color: #333;
+	}
+</style>

@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { users } from '$lib/userStore';
+	import { sidebarHeight, headerHeight } from '$lib/index';
 	import AddUserModal from '../../components/Add User Modal.svelte';
 
 	let role;
@@ -31,7 +32,10 @@
 	});
 </script>
 
-<div class="flex flex-wrap p-4">
+<div
+	class="bg-white flex flex-wrap p-4 shadow-md"
+	style="height: calc({$sidebarHeight}px - {$headerHeight}px - 32px);"
+>
 	<div class="w-full">
 		<div class="flex justify-between">
 			<h1 class="font-medium text-xl">User Management</h1>

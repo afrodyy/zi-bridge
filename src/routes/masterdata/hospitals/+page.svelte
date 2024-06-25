@@ -1,5 +1,6 @@
 <script>
 	import { hospitals } from '$lib/hospitalStore';
+	import { sidebarHeight, headerHeight } from '$lib/index';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 
@@ -35,8 +36,11 @@
 	});
 </script>
 
-<div class="flex flex-col flex-wrap p-4">
-	<div class="flex flex-wrap items-center justify-between mb-4">
+<div
+	class="bg-white p-4 overflow-y-scroll flex flex-wrap"
+	style="height: calc({$sidebarHeight}px - {$headerHeight}px - 32px);"
+>
+	<div class="flex flex-wrap w-full items-center justify-between mb-4">
 		<h1 class="text-2xl font-semibold my-3">Master Data Hospitals</h1>
 		<a
 			href="/masterdata/hospitals/create"

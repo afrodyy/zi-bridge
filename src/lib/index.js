@@ -5,3 +5,4 @@ export const sidebarHeight = writable();
 export const sidebarWidth = writable();
 export const headerHeight = writable();
 export const headerWidth = writable();
+export const terminalHeight = writable();

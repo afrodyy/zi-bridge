@@ -1,8 +1,12 @@
 <script>
 	import { logs } from '$lib/logStore';
+	import { sidebarHeight, headerHeight } from '$lib/index';
 </script>
 
-<div class="flex flex-wrap">
+<div
+	class="bg-white flex flex-wrap shadow-md"
+	style="height: calc({$sidebarHeight}px - {$headerHeight}px - 32px);"
+>
 	<div class="w-full p-4">
 		<h1 class="text-2xl font-semibold mb-4">Logs</h1>
 

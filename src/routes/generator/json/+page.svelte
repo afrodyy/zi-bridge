@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { sidebarHeight, headerHeight } from '$lib/index';
 
 	let role;
 	let grantAccess;
@@ -28,7 +29,10 @@
 	});
 </script>
 
-<div class="flex flex-col flex-wrap px-4">
+<div
+	class="flex flex-col flex-wrap px-4"
+	style="height: calc({$sidebarHeight}px - {$headerHeight}px - 32px);"
+>
 	<h1 class="w-full text-2xl font-semibold my-3">JSON Beautify</h1>
 	<div class="grid grid-cols-2 gap-x-12 mb-4">
 		<textarea class="w-full bg-gray-900 rounded p-2 text-blue-300" rows="18"
