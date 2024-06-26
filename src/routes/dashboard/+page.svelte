@@ -2,7 +2,7 @@
 	import Button from '../../components/Button.svelte';
 	import Card from '../../components/Card.svelte';
 	import { count } from '$lib/store';
-	import { sidebarHeight, headerHeight } from '$lib/index';
+	import { sidebarHeight, headerHeight } from '$lib/store';
 </script>
 
 <!-- Content Area -->
